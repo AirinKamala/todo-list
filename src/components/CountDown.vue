@@ -3,12 +3,13 @@ export default {
     name: 'CountDown',
     data() {
         return {
-            hours: 1,
-            minutes: 2,
-            seconds: 2,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
             miliseconds: 0,
             isRunning: false,
             timer: null,
+            clear: false,
         }
     },
     methods: {
@@ -22,6 +23,7 @@ export default {
                 this.reset;
                 return
             } else {
+                
                 if (!this.isRunning) {
                     this.timer = setInterval(this.updateTime, 33);
                 } else {
@@ -29,6 +31,7 @@ export default {
                 }
                 this.isRunning = !this.isRunning;
             }
+            
         },
         reset() {
             clearInterval(this.timer);
@@ -37,8 +40,10 @@ export default {
             this.seconds = 0;
             this.miliseconds = 0;
             this.isRunning = false;
+            this.clear=false;
         },
         updateTime() {
+            this.clear=true;
             this.miliseconds += 33;
             if (this.miliseconds >= 1000) {
                 if (!this.seconds == 0) {
@@ -48,6 +53,7 @@ export default {
                         if (this.hours == 0 && this.minutes == 0 && this.seconds == 0) {
                             clearInterval(this.timer);
                             this.isRunning = false;
+                            this.clear=false;
                             return;
                         }
                         this.minutes = 59;
@@ -66,17 +72,28 @@ export default {
 </script>
 
 <template>
-    <h1>CountDown Timer</h1>
+    <h1>Countdown Timer</h1>
     <div id="timer">
-        <input class="text-[30px] w-12 text-center h-[30px] m-4" type="text" v-model="hours"> :
-        <input class="text-[30px] w-12 text-center h-[30px] m-4" type="text" name="minutes" id="minutes"
+        <input type="text" :disabled="clear" v-model="hours" id="hours">
+        :
+        <input type="text" :disabled="clear" name="minutes" id="minutes"
             v-model="minutes"> :
-        <input class="text-[30px] w-12 text-center h-[30px] m-4" type="text" name="second" id="second"
+        <input type="text" :disabled="clear" name="second" id="second"
             v-model="seconds">
     </div>
     <div id="action">
-        <p>{{ isRunning ? 'Running' : 'Not Running' }}</p>
         <button @click="start()">{{ isRunning ? 'Stop' : 'Start' }}</button>
         <button @click="reset()">Reset</button>
     </div>
 </template>
+<style>
+    input{
+        border: none;
+        background-color: transparent;
+        font-size: 30px;
+        width: 2rem;
+        height: 30px;
+        text-align: center;
+        margin: 2rem;
+    }
+</style>

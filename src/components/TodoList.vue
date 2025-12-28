@@ -47,7 +47,8 @@ function removeTodo(todo) {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container"
+  >
     <h1>Welcome Back, </h1>
     <input type="text" name="nama" id="nama" v-model="nama" placeholder="Your Name">
   </div>
@@ -80,5 +81,15 @@ function removeTodo(todo) {
 
 </template>
 
-<style scoped></style>
+<style scoped>
+  [type='text']{
+    font-size: medium;
+    width: auto;
+    height: auto;
+  }
+  .container{
+    display: flex;
+    flex-wrap: wrap;
+  }
+</style>
  
